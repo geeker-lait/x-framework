@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="updater">
+    <!---->
+    <update id="_upd">
+        update ${_table_}
+        <set>
+            <foreach item="columnValue" index="columnName" collection="_kv_mapping_" separator=",">
+                ${columnName} = #{columnValue}
+            </foreach>
+        </set>
+        <where>
+            <if test="_where_exp_ != null">
+                ${_where_exp_}
+            </if>
+        </where>
+    </update>
+
+<!--
+${_pk_} = #{_pv_}
+    <update id="_upds">
+        update ${_table_}
+        <set>
+            <foreach item="columnValue" index="columnName" collection="_kv_mapping_" separator=",">
+                ${columnName} = #{columnValue}
+            </foreach>
+        </set>
+        <where>
+            <if test="_where_exp_ != null">
+                ${_where_exp_}
+            </if>
+        </where>
+    </update>-->
+
+
+</mapper>

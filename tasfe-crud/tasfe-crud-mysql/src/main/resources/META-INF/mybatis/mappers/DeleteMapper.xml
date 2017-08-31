@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="deleter">
+    <delete id="_del" parameterType="map">
+        <![CDATA[
+
+    delete from ${_table_}
+    where ${_pk_} = #{_pv_}
+
+        ]]>
+
+    </delete>
+
+    <!--delete from ${_table_}
+    <where>
+        1=1
+        <foreach item="rowMapping" index="index" collection="_datas_" separator=",">
+            <foreach item="columnValue" index="columnName" collection="rowMapping" open="(" separator="," close=")">
+                ${columnName} = #{columnValue}
+            </foreach>
+        </foreach>
+    </where>-->
+
+    <delete id="_dels" parameterType="map">
+        <![CDATA[
+
+    delete from ${_table_}
+    where ${_where_exp_}
+
+        ]]>
+    </delete>
+
+</mapper>
