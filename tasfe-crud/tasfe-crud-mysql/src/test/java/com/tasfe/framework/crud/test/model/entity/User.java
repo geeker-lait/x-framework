@@ -7,6 +7,7 @@ import javax.persistence.Transient;
 import com.tasfe.framework.crud.api.annotation.Sharding;
 import com.tasfe.framework.crud.api.enums.StoragerType;
 import com.tasfe.framework.crud.api.annotation.Storager;
+import lombok.Data;
 import org.apache.ibatis.type.Alias;
 
 import com.tasfe.framework.crud.mysql.type.DataState;
@@ -19,6 +20,7 @@ import com.tasfe.framework.crud.mysql.type.DataState;
 @Table(name = "t_user")
 @Storager(storage={StoragerType.MYSQL})
 @Sharding(key="id")
+@Data
 public class User{
 
    /* @Transient
@@ -31,8 +33,8 @@ public class User{
     private Long id;
 
     private Long userId;
-
-    private Integer deptId;
+    private Long deptId;
+    private Long orderId;
 
     private String userName;
 
@@ -48,102 +50,13 @@ public class User{
 
     private String job;
 
-    private Integer orderId;
+
 
     private DataState status;
 
     public User() {
     }
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Integer getDeptId() {
-        return deptId;
-    }
-
-    public void setDeptId(Integer deptId) {
-        this.deptId = deptId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getMobilePhone() {
-        return mobilePhone;
-    }
-
-    public void setMobilePhone(String mobilePhone) {
-        this.mobilePhone = mobilePhone;
-    }
-
-    public String getOfficePhone() {
-        return officePhone;
-    }
-
-    public void setOfficePhone(String officePhone) {
-        this.officePhone = officePhone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getJob() {
-        return job;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
-    }
-
-    public Integer getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
-
-
-    public DataState getStatus() {
-        return status;
-    }
-
-    public void setStatus(DataState status) {
-        this.status = status;
-    }
 
     @Override
     public int hashCode() {

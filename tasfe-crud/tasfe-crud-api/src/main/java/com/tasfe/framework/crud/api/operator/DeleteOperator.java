@@ -2,6 +2,8 @@ package com.tasfe.framework.crud.api.operator;
 
 import com.tasfe.framework.crud.api.criteria.Criteria;
 
+import java.io.Serializable;
+
 /**
  * Created by Lait on 2017/7/7.
  */
@@ -12,7 +14,7 @@ public interface DeleteOperator {
      *
      * @param ids
      */
-    <T> void del(Class<T> clazz,Long... ids) throws Exception;
+    <T,PK extends Serializable> void delete(Class<T> clazz, PK... ids) throws Exception;
 
 
     /**
@@ -22,7 +24,7 @@ public interface DeleteOperator {
      * @param <T>
      * @throws Exception
      */
-    <T> void del(T records, Criteria criteria) throws Exception;
+    <T> void delete(T records, Criteria criteria) throws Exception;
 
 
 }

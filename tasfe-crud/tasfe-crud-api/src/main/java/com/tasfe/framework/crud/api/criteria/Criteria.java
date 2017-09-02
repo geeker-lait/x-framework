@@ -3,6 +3,7 @@ package com.tasfe.framework.crud.api.criteria;
 import com.tasfe.framework.crud.api.enums.Operator;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Criteria {
     // 函数表达式
     private String expression;
     // id 集合
-    private List<Long> ids = new ArrayList<>();
+    private List<Serializable> ids = new ArrayList<>();
     // where
     private Where where = new Where(this);
     // field字段
@@ -103,7 +104,7 @@ public class Criteria {
         return this;
     }
 
-    public Criteria list(Long... ids) {
+    public <PK extends Serializable> Criteria list(PK... ids) {
         this.ids.addAll(Arrays.asList(ids));
         return this;
     }

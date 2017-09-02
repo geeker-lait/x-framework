@@ -43,7 +43,7 @@ public class CrudControllerTest {
         Map<String, Object> result = new HashMap<String, Object>();
 
         User user = new User();
-        user.setDeptId(1);
+        user.setDeptId(1L);
         user.setEmail("lait.zhang@gmail.com");
         user.setJob("java programer");
         //user.setLoginName("lait");
@@ -69,7 +69,7 @@ public class CrudControllerTest {
 
         for (int i = 1; i < 10; i++) {
             User user = new User();
-            user.setDeptId(1 + i);
+            user.setDeptId(Long.valueOf(1 + i));
             user.setEmail("lait.zhang@gmail.com" + i);
             user.setJob("java programer" + i);
             //user.setLoginName("lait" + i);
@@ -95,7 +95,7 @@ public class CrudControllerTest {
 
         User user = new User();
         user.setUserId(13L);
-        user.setDeptId(1);
+        user.setDeptId(1L);
         user.setEmail("lait.zhang@gmail.com");
         user.setJob("java programer");
         user.setStatus(DataState.UNEFFECT);
@@ -115,7 +115,7 @@ public class CrudControllerTest {
 
         User user = new User();
         user.setUserId(12L);
-        user.setDeptId(1);
+        user.setDeptId(1L);
         user.setEmail("lait.zhang@gmail.com");
         user.setJob("java programer");
         //user.setLoginName("lait");

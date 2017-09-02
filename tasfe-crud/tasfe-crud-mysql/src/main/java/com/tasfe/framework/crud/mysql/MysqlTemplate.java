@@ -160,7 +160,7 @@ public class MysqlTemplate extends CrudTemplate implements RdbOperator, Initiali
     /********************************** get *************************************/
 
     @Override
-    public <T> T _get(Class<T> clazz, Long id) throws Exception {
+    public <T,PK extends Serializable> T _get(Class<T> clazz, PK id) throws Exception {
         Map<String, Object> param = new HashMap<>();
 
         String tableName = GeneralMapperReflectUtil.getTableName(clazz);
@@ -178,7 +178,7 @@ public class MysqlTemplate extends CrudTemplate implements RdbOperator, Initiali
     }
 
     @Override
-    public <T> List<T> _list(Class<T> clazz, Long... ids) throws Exception {
+    public <T,PK extends Serializable> List<T> _list(Class<T> clazz, PK... ids) throws Exception {
         Map<String, Object> param = new HashMap<>();
 
         param.put("_table_", GeneralMapperReflectUtil.getTableName(clazz));
@@ -235,7 +235,7 @@ public class MysqlTemplate extends CrudTemplate implements RdbOperator, Initiali
     }
 
     @Override
-    public <T> void _dels(Class<T> clazz, Long... pk) throws Exception {
+    public <T,PK extends Serializable> void _dels(Class<T> clazz, PK... pk) throws Exception {
         Map<String, Object> param = new HashMap<>();
 
         String tableName = GeneralMapperReflectUtil.getTableName(clazz);
@@ -244,7 +244,7 @@ public class MysqlTemplate extends CrudTemplate implements RdbOperator, Initiali
         param.put("_pk_", primaryKey);
 
         List<Map<String, Object>> datas = new ArrayList<>();
-        for (Long id : pk) {
+        for (PK id : pk) {
             Map pvmap = new HashMap<String, Object>();
             pvmap.put(primaryKey, id);
             datas.add(pvmap);

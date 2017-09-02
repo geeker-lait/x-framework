@@ -13,8 +13,10 @@ import org.hibernate.annotations.SourceType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeanUtils;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -28,6 +30,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:springs/spring-mybatis.xml"})
+//@Transactional
 public class CrudTest {
 
     @Resource(name="mysql")
@@ -38,8 +41,8 @@ public class CrudTest {
         AtomicLong al = new AtomicLong();
         Random random = new Random();
         u.setUserId(Long.valueOf(random.nextInt()));
-        u.setDeptId(1);
-        u.setOrderId(random.nextInt());
+        u.setDeptId(1L);
+        u.setOrderId(11L);
         u.setEmail("lait.zhang@gmail.com");
         u.setMobilePhone("15801818092");
         u.setPassword("123");
@@ -55,6 +58,8 @@ public class CrudTest {
     }
 
     @Test
+    @Transactional
+    @Rollback(false)
     public void testInsert() throws Exception {
 
         crudTemplate.save(getUser());
@@ -64,12 +69,12 @@ public class CrudTest {
 
 
 
-        Member member = new Member();
+       /* Member member = new Member();
         member.setEmail("lait");
         member.setUserId(11L);
         member.setDeptId(1);
         member.setOrderId(111);
-        crudTemplate.save(member);
+        crudTemplate.save(member);*/
 
     }
 
@@ -99,7 +104,7 @@ public class CrudTest {
 
 
         user.setUserId(-996253669L);
-        criteria = Criteria.from(User.class).where().camelCase(false).and("userId",Operator.EQ).endWhere();
+        criteria = Criteria.from(User.class).where().camelCase(true).and("userId",Operator.EQ).endWhere();
         users = crudTemplate.find(user,criteria);
         System.out.println(users +"====="+ users);
 
@@ -240,12 +245,12 @@ public class CrudTest {
     public void testDel() throws Exception {
 
         Long[] ids = new Long[]{95L,96L,97L};
-        crudTemplate.del(User.class,ids);
+        crudTemplate.delete(User.class,ids);
 
 
         User user = new User();
         user.setEmail("lait.zhang@gmail.com");
-        crudTemplate.del(user,Criteria.from(User.class).where().and("email",Operator.EQ).endWhere());
+        crudTemplate.delete(user,Criteria.from(User.class).where().and("email",Operator.EQ).endWhere());
 
     }
 

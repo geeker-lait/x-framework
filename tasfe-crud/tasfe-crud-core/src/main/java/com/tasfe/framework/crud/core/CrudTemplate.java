@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -121,13 +122,13 @@ public abstract class CrudTemplate implements CrudOperator, ApplicationContextAw
      * @throws Exception
      */
     @Override
-    public <T> T get(Class<T> entiyClass, Long id) throws Exception {
+    public <T,PK extends Serializable> T get(Class<T> entiyClass, PK id) throws Exception {
         CrudParam crudParam = new CrudParam(CrudMethod.GET, entiyClass, id);
         return (T) crudRouter.route(crudParam);
     }
 
     @Override
-    public <Entity> List<Entity> list(Class<Entity> entiyClass, Long... ids) throws Exception {
+    public <Entity,PK extends Serializable> List<Entity> list(Class<Entity> entiyClass, PK... ids) throws Exception {
         CrudParam crudParam = new CrudParam(CrudMethod.LIST, entiyClass, ids);
         Criteria criteria = Criteria.from(entiyClass).list(ids);
         return (List<Entity>) crudRouter.route(crudParam);
@@ -140,12 +141,12 @@ public abstract class CrudTemplate implements CrudOperator, ApplicationContextAw
         return (List<Entity>) crudRouter.route(crudParam);
     }
 
-    @Override
+    /*@Override
     public <Entity> List<Entity> query(Entity entity, Criteria criteria) throws Exception {
         CrudParam crudParam = new CrudParam(CrudMethod.QUERY, criteria);
         crudParam.setEntity(entity);
         return (List<Entity>) crudRouter.route(crudParam);
-    }
+    }*/
 
     /**
      * 删除数据
@@ -153,7 +154,7 @@ public abstract class CrudTemplate implements CrudOperator, ApplicationContextAw
      * @param id
      */
     @Override
-    public <T> void del(Class<T> clazz, Long... id) throws Exception {
+    public <T,PK extends Serializable> void delete(Class<T> clazz, PK... id) throws Exception {
         CrudParam crudParam = new CrudParam();
         crudParam.setPks(id);
         crudParam.setQueryClazz(clazz);
@@ -164,7 +165,7 @@ public abstract class CrudTemplate implements CrudOperator, ApplicationContextAw
 
 
     @Override
-    public <T> void del(T entity, Criteria criteria) throws Exception {
+    public <T> void delete(T entity, Criteria criteria) throws Exception {
         CrudParam crudParam = new CrudParam(CrudMethod.DEL, entity);
         crudParam.setCriteria(criteria);
         crudRouter.route(crudParam);

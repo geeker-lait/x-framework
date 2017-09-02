@@ -3,7 +3,9 @@ package com.tasfe.framework.crud.api.params;
 import com.tasfe.framework.crud.api.criteria.Criteria;
 import com.tasfe.framework.crud.api.enums.CrudMethod;
 import lombok.Data;
+import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -11,17 +13,18 @@ import java.util.Map;
  * Created by Lait on 2017/4/15
  * sql查询参数
  */
-@Data
+//@Data
+@Getter
 public class CrudParam {
     /**
      * 单主键
      */
-    private Long pk;
+    private Serializable pk;
 
     /**
      * 多主键
      */
-    private Long[] pks;
+    private Serializable[] pks;
 
     /**
      * 表对应的pojo类
@@ -115,13 +118,13 @@ public class CrudParam {
         this.entity = record;
     }
 
-    public <T> CrudParam(CrudMethod cm, Class<T> entiyClass, Long id) {
+    public <T,PK extends Serializable> CrudParam(CrudMethod cm, Class<T> entiyClass, PK id) {
         this.crudMethod = cm.toString();
         this.queryClazz = entiyClass;
         this.pk = id;
     }
 
-    public <T> CrudParam(CrudMethod cm, Class<T> entiyClass, Long[] ids) {
+    public <T,PK extends Serializable> CrudParam(CrudMethod cm, Class<T> entiyClass, PK[] ids) {
         this.crudMethod = cm.toString();
         this.queryClazz = entiyClass;
         this.pks = ids;
@@ -139,7 +142,59 @@ public class CrudParam {
         return null;
     }
 
-/*    public void setQueryClazz(Class<?> queryClazz) {
+    public <PK extends Serializable> void setPk(PK pk) {
+        this.pk = pk;
+    }
+
+    public <PK extends Serializable> void setPks(PK[] pks) {
+        this.pks = pks;
+    }
+
+    public void setQueryClazz(Class<?> queryClazz) {
+        this.queryClazz = queryClazz;
+    }
+
+    public void setQueryColumn(List<String> queryColumn) {
+        this.queryColumn = queryColumn;
+    }
+
+    public void setConditionExp(String conditionExp) {
+        this.conditionExp = conditionExp;
+    }
+
+    public void setCriteria(Criteria criteria) {
+        this.criteria = criteria;
+    }
+
+    public void setConditionParam(Map<String, Object> conditionParam) {
+        this.conditionParam = conditionParam;
+    }
+
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public void setPageNo(Integer pageNo) {
+        this.pageNo = pageNo;
+    }
+
+    public void setOrderExp(String orderExp) {
+        this.orderExp = orderExp;
+    }
+
+    public void setCrudMethod(String crudMethod) {
+        this.crudMethod = crudMethod;
+    }
+
+    public void setEntity(Object entity) {
+        this.entity = entity;
+    }
+
+    public void setEntityList(List<?> entityList) {
+        this.entityList = entityList;
+    }
+
+    /*    public void setQueryClazz(Class<?> queryClazz) {
         this.queryClazz = queryClazz;
     }
 

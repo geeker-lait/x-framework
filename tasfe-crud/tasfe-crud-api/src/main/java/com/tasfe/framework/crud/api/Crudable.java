@@ -3,6 +3,7 @@ package com.tasfe.framework.crud.api;
 import com.tasfe.framework.crud.api.criteria.Criteria;
 import com.tasfe.framework.crud.api.params.CrudParam;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -121,7 +122,7 @@ public interface Crudable {
      * @return pojo对象
      * @throws Exception
      */
-    <T> T _get(Class<T> clazz, Long pk) throws Exception;
+    <T,PK extends Serializable> T _get(Class<T> clazz, PK pk) throws Exception;
 
 
     /**
@@ -131,7 +132,7 @@ public interface Crudable {
      * @return
      * @throws Exception
      */
-    <T> List<T> _list(Class<T> clazz, Long... pk) throws Exception;
+    <T,PK extends Serializable> List<T> _list(Class<T> clazz, PK... pk) throws Exception;
 
 
     /**
@@ -167,7 +168,7 @@ public interface Crudable {
      * @param pk    主键值
      * @return 数据条数
      */
-    <T> void _dels(Class<T> clazz, Long... pk)  throws Exception ;
+    <T,PK extends Serializable> void _dels(Class<T> clazz, PK... pk)  throws Exception ;
 
     /**
      * 删除
