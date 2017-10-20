@@ -60,6 +60,7 @@
     <modules>
         <module>tasfe-crud</module>
 		<module>tasfe-netty</module>
+		<module>tasfe-rpc</module>
     </modules>
 
     <!--############### 所有子模块共同包含################-->
@@ -158,6 +159,12 @@
             </dependency>
 
             <!--###################### 3th jar ##########################$$$-->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.16.4</version>
+            </dependency>
+
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -296,11 +303,7 @@
                 <version>1.0.2</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>1.16.4</version>
-            </dependency>
+
 
             <!--################################## aop jars aspectj:spring aop注解编程 ################################## -->
 
@@ -417,6 +420,12 @@
             </dependency>
 
             <!-- ####################### apache curator jars ########################## -->
+            <dependency>
+                <groupId>org.apache.zookeeper</groupId>
+                <artifactId>zookeeper</artifactId>
+                <version>3.4.10</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-framework</artifactId>
