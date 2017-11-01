@@ -58,17 +58,16 @@
 
 
     <modules>
+        <module>tasfe-cache</module>
         <module>tasfe-crud</module>
 		<module>tasfe-netty</module>
+        <module>tasfe-redis</module>
 		<module>tasfe-rpc</module>
+
     </modules>
 
     <!--############### 所有子模块共同包含################-->
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
 
 		 <dependency>
             <groupId>org.slf4j</groupId>
@@ -272,6 +271,19 @@
                 <version>${spring.version}</version>
             </dependency>
 
+
+            <!--Spring-data-redis-->
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>2.9.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-redis</artifactId>
+                <!--1.7.0.RELEASE-->
+                <version>2.0.0.RELEASE</version>
+            </dependency>
 
 
 
