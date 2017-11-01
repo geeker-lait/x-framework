@@ -79,6 +79,7 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+
     </dependencies>
     <!--################ 版本定义 ####################-->
     <dependencyManagement>
