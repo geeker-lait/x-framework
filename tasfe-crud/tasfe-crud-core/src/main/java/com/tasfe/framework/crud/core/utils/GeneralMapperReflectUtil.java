@@ -162,6 +162,7 @@ public class GeneralMapperReflectUtil {
 
         for (Field field : fields) {
             String fieldValue = FieldReflectUtil.getFieldStringValue(t, field);
+
             if (fieldValue != null) {
                 if (camelCase) {
                     mapping.put(StringUtil.camelToUnderline(field.getName()), fieldValue);

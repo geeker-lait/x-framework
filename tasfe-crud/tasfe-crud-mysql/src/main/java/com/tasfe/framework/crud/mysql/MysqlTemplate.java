@@ -207,7 +207,7 @@ public class MysqlTemplate extends CrudTemplate implements RdbOperator, Initiali
         if (resultMaps != null && resultMaps.size() != 0) {
             if (camelCase) {
                 for (Map<String, Object> resultMap : resultMaps) {
-                    result.add(GeneralMapperReflectUtil.parseToBean(resultMap, (Class<T>) criteria.getClazz(), true));
+                    result.add(GeneralMapperReflectUtil.parseToBean(resultMap, (Class<T>)entity.getClass()/*(Class<T>) criteria.getClazz()*/, true));
                 }
             } else {
                 for (Map<String, Object> resultMap : resultMaps) {

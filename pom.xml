@@ -63,6 +63,7 @@
 		<module>tasfe-netty</module>
         <module>tasfe-redis</module>
 		<module>tasfe-rpc</module>
+        <module>tasfe-uid</module>
 
     </modules>
 
@@ -79,7 +80,12 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <!--################ 版本定义 ####################-->
     <dependencyManagement>

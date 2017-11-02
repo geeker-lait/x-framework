@@ -2,6 +2,7 @@ package com.tasfe.framework.crud.core.utils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.Date;
 
 import org.springframework.util.ReflectionUtils;
 
@@ -22,7 +23,12 @@ public class FieldReflectUtil {
         if (field.getType().isEnum()) {
             EnumFieldReflectUtil.setFieldEnumValueByOrdinal(t, field, (int) value);
         } else {
-            field.set(t, value);
+            if(value instanceof java.sql.Timestamp){
+                java.util.Date dateValue = new Date(((java.sql.Timestamp)value).getTime());
+                field.set(t, dateValue);
+            } else {
+                field.set(t, value);
+            }
         }
     }
 
@@ -39,8 +45,13 @@ public class FieldReflectUtil {
      */
     public static <T> Object getFieldValue(T t, Field field) throws Exception {
         ReflectionUtils.makeAccessible(field);
-        if (field.get(t) != null) {
-            return field.get(t);
+        Object object = field.get(t);
+        if (object != null) {
+            // 如果是date类型的自动转sql.date
+            if (field.getGenericType().toString().equals("class java.util.Date")) {
+                return new java.sql.Timestamp(((java.util.Date)object).getTime());
+            }
+            return object;
         } else {
             return null;
         }

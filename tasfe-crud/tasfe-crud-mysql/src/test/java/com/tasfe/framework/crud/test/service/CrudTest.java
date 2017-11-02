@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -46,6 +47,7 @@ public class CrudTest {
         u.setEmail("lait.zhang@gmail.com");
         u.setMobilePhone("15801818092");
         u.setPassword("123");
+        u.setBirth(new Date());
         return u;
     }
 
@@ -65,7 +67,7 @@ public class CrudTest {
         crudTemplate.save(getUser());
 
 
-        crudTemplate.save(getUsers(10));
+        //crudTemplate.save(getUsers(10));
 
 
 
@@ -132,8 +134,8 @@ public class CrudTest {
     @Test
     public void testFind() throws Exception {
         User user = new User();
-        user.setEmail("lait.zhan");
-        user.setMobilePhone("333");
+        //user.setEmail("lait.zhan");
+        user.setMobilePhone("15801818092");
         Criteria criteria = Criteria.from(User.class);
         List<User> users = crudTemplate.find(user,criteria);
         System.out.println("users.like ==============================="+ users);

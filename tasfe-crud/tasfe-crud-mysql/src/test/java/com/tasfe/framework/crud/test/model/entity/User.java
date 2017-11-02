@@ -12,6 +12,8 @@ import org.apache.ibatis.type.Alias;
 
 import com.tasfe.framework.crud.mysql.type.DataState;
 
+import java.util.Date;
+
 /**
  * Created by Lait on 2017/4/15
  * 用户信息
@@ -50,6 +52,8 @@ public class User{
 
     private String job;
 
+    private Date birth;
+
 
 
     private DataState status;
@@ -85,9 +89,19 @@ public class User{
 
     @Override
     public String toString() {
-        return "User [userId=" + userId + ", deptId=" + deptId + ", userName=" + userName + ", id=" + id
-                + ", password=" + password + ", mobilePhone=" + mobilePhone + ", officePhone=" + officePhone
-                + ", email=" + email + ", job=" + job + ", orderId=" + orderId + ", status=" + status + "]";
+        return "User{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", deptId=" + deptId +
+                ", orderId=" + orderId +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", mobilePhone='" + mobilePhone + '\'' +
+                ", officePhone='" + officePhone + '\'' +
+                ", email='" + email + '\'' +
+                ", job='" + job + '\'' +
+                ", birth=" + birth +
+                ", status=" + status +
+                '}';
     }
-
 }

@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.tasfe.framework</groupId>
+        <artifactId>tasfe-framework</artifactId>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+    <artifactId>tasfe-uid</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>tasfe-uid-client</module>
+        <module>tasfe-uid-common</module>
+        <module>tasfe-uid-demo</module>
+        <module>tasfe-uid-server</module>
+    </modules>
+
+    <dependencies>
+
+
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.tasfe.framework</groupId>
+                <artifactId>tasfe-uid-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tasfe.framework</groupId>
+                <artifactId>tasfe-uid-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tasfe.framework</groupId>
+                <artifactId>tasfe-uid-demo</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tasfe.framework</groupId>
+                <artifactId>tasfe-uid-server</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
