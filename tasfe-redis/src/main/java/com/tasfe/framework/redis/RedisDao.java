@@ -338,4 +338,6 @@ public interface RedisDao {
      * @Description: spring-data cluster暂时不支持pipeline方式，自己实现
      */
     List<Object> pipelineGet(List<String> list);
+
+    boolean incr(String key,long step);
 }
