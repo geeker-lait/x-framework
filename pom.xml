@@ -289,7 +289,7 @@
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-redis</artifactId>
                 <!--1.7.0.RELEASE-->
-                <version>2.0.0.RELEASE</version>
+                <version>1.7.0.RELEASE</version>
             </dependency>
 
 

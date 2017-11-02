@@ -2,6 +2,7 @@ package com.tasfe.framework.redis.impl;
 
 import com.tasfe.framework.redis.RedisDao;
 import com.tasfe.framework.redis.util.JedisClusterPipeline;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
@@ -29,6 +30,7 @@ public class RedisDaoImpl implements RedisDao {
     private RedisTemplate<String, Object> redisTemplate;
 
 
+
     @Override
     public void setString(final String key, final String value) {
 
@@ -44,7 +46,6 @@ public class RedisDaoImpl implements RedisDao {
             }
         }, true);
     }
-
 
     @Override
     public void setString(final String key, final String value, final long timeout, final TimeUnit unit) {
@@ -448,6 +449,20 @@ public class RedisDaoImpl implements RedisDao {
         } else {
             throw new UnsupportedOperationException("Pipeline is not supported for currently mode.");
         }
+    }
+
+    @Override
+    public boolean incr(String key,long step) {
+        if(StringUtils.isEmpty(key)) {
+            return false;
+        }
+        try {
+            this.redisTemplate.boundValueOps(key).increment(step);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+
     }
 
 

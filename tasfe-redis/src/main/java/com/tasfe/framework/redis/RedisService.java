@@ -249,4 +249,11 @@ public interface RedisService {
     boolean multiSet(Map<String, Object> map, long expire, boolean syn, ExecutorService service);
 
     List<Object> multiGet(List<String> list);
+
+    /**
+     * 实现key的自增加
+     * @param key
+     * @return
+     */
+    boolean incr(String key,long step);
 }

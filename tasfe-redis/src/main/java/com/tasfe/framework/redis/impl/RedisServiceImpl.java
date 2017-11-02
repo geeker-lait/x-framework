@@ -641,4 +641,9 @@ public class RedisServiceImpl implements RedisService {
         }
         return null;
     }
+
+    @Override
+    public boolean incr(String key,long step) {
+        return this.redisDao.incr(key,step);
+    }
 }
