@@ -60,6 +60,7 @@
     <modules>
         <module>tasfe-cache</module>
         <module>tasfe-crud</module>
+        <module>tasfe-mongo</module>
 		<module>tasfe-netty</module>
         <module>tasfe-redis</module>
 		<module>tasfe-rpc</module>
@@ -161,6 +162,14 @@
             <dependency>
                 <groupId>com.tasfe.framework</groupId>
                 <artifactId>tasfe-netty</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <!--################### tasfe-mongo module########################-->
+
+            <dependency>
+                <groupId>com.tasfe.framework</groupId>
+                <artifactId>tasfe-mongo</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
