@@ -165,6 +165,13 @@
                 <version>${project.version}</version>
             </dependency>
 
+
+            <dependency>
+                <groupId>com.tasfe.framework</groupId>
+                <artifactId>tasfe-redis</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!--################### tasfe-mongo module########################-->
 
             <dependency>
