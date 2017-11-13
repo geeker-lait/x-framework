@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tree">
+
+    <sql id="Base_Column_List">
+    `id`,`pid`,`name`,`initial`,`initials`,`pinyin`,`extra`,`suffix`,`code`,`acode`,`order`
+    </sql>
+
+    <resultMap id="getMap" type="com.zh.pojo.DistrictInfos"/>
+
+    <!--根据父id查询子节点-->
+    <select id="getById"  parameterType="Long" resultMap="getMap">
+        select
+        <include refid="Base_Column_List"/>
+        from district
+        <where>
+            pid= #{id}
+        </where>
+    </select>
+
+
+    <select id="_tree" parameterType="java.util.Map" resultMap="dictTree">
+        select
+        <include refid="Base_Column_List"/>,id as parent
+        from district
+        WHERE 1=1
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+
+        <if test="pid != null">
+            AND pid = #{pid}
+        </if>
+
+        <if test="code != null">
+            AND code = #{code}
+        </if>
+
+    </select>
+
+    <!--根据父id查询子节点-->
+    <select id="selectChildrenById"  parameterType="Long" resultMap="dictTree">
+        select
+        <include refid="Base_Column_List"/>,id as parent
+        from district
+        <where>
+            pid= #{id}
+        </where>
+    </select>
+
+
+    <!-- 初始化字典树 -->
+    <resultMap id="dictTree" type="com.zh.pojo.DistrictInfos">
+        <id column="id" property="id" javaType="java.lang.Long" jdbcType="INTEGER"/>
+        <result column="pid" property="pid" javaType="java.lang.Long" jdbcType="INTEGER"/>
+
+        <result column="name" property="type" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="initial" property="key" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="initials" property="val" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="pinyin" property="code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="extra" property="code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="suffix" property="code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="code" property="code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="acode" property="code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result column="order" property="code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+
+        <collection column="parent" property="districtTrees" ofType="com.zh.pojo.DistrictInfos" javaType="java.util.ArrayList"
+                    select="com.zh.dictionary.mapper.DistrictMapper.selectChildrenById"/>
+    </resultMap>
+
+</mapper>

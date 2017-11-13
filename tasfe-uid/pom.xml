@@ -15,6 +15,7 @@
         <module>tasfe-uid-common</module>
         <module>tasfe-uid-demo</module>
         <module>tasfe-uid-server</module>
+        <module>tasfe-uid-service</module>
     </modules>
 
     <dependencies>
@@ -39,6 +40,12 @@
             <dependency>
                 <groupId>com.tasfe.framework</groupId>
                 <artifactId>tasfe-uid-demo</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.tasfe.framework</groupId>
+                <artifactId>tasfe-uid-service</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

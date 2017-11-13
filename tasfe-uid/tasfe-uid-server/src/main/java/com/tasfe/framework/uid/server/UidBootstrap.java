@@ -2,7 +2,7 @@ package com.tasfe.framework.uid.server;
 
 import com.tasfe.framework.uid.exception.RedisNoAddressException;
 import com.tasfe.framework.uid.exception.ZooKeeperNoAddressException;
-import com.tasfe.framework.uid.snowflake.Snowflake;
+import com.tasfe.framework.uid.service.algorithm.Snowflake;
 import com.tasfe.framework.uid.zk.ZkClient;
 import org.apache.zookeeper.KeeperException;
 

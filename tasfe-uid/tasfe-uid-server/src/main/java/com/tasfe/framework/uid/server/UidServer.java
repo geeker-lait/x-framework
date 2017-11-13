@@ -3,7 +3,7 @@ package com.tasfe.framework.uid.server;
 import com.tasfe.framework.uid.handler.DecoderHandler;
 import com.tasfe.framework.uid.handler.UidHandler;
 import com.tasfe.framework.uid.model.UidRequest;
-import com.tasfe.framework.uid.snowflake.Snowflake;
+import com.tasfe.framework.uid.service.algorithm.Snowflake;
 import com.tasfe.framework.uid.util.*;
 import com.tasfe.framework.uid.zk.ZkClient;
 import io.netty.bootstrap.ServerBootstrap;

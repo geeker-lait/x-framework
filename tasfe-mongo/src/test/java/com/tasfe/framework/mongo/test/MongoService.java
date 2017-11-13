@@ -19,16 +19,17 @@ public class MongoService {
         System.err.println(mongoFactory.dynamicMongoDao.getMongoTemplate().findAll(Admin.class, "system.users"));
     }
 
-    @DynamicMongoSource(key = "localMongo", db = "idea")
+    @DynamicMongoSource(key = "localMongo", db = "dsp")
     public void findIdea() {
         System.err.println(mongoFactory.dynamicMongoDao.findListBean(Idea.class));
     }
 
-    @DynamicMongoSource(db = "idea")
+    @DynamicMongoSource(db = "dsp")
     public void addTest() {
         Idea i = new Idea();
         i.setName("lait");
         i.setCnName("亮哥");
+        mongoFactory.dynamicMongoDao.getMongoTemplate().createCollection("lait");
         mongoFactory.dynamicMongoDao.insert(i);
     }
 }

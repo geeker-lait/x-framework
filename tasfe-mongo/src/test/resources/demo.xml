@@ -10,7 +10,7 @@
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-    <bean id="mongoDataSource" class="com.tasfe.framework.mongo.support.core.SimpleMongoDataSource">
+    <!--<bean id="mongoDataSource" class="com.tasfe.framework.mongo.support.core.SimpleMongoDataSource">
         <property name="hosts" value="127.0.0.1"/>
         <property name="ports" value="27017"/>
         <property name="userNames" value="admin;idea"/>
@@ -26,8 +26,26 @@
         <property name="passwords" value="admin;idea"/>
         <property name="authDatabases" value="admin;idea"/>
         <property name="defaultDatabase" value="admin"/>
+    </bean>-->
+
+
+    <bean id="mongoDataSource" class="com.tasfe.framework.mongo.support.core.SimpleMongoDataSource">
+        <property name="hosts" value="120.132.102.112"/>
+        <property name="ports" value="27017"/>
+        <property name="userNames" value=""/>
+        <property name="passwords" value=""/>
+        <property name="authDatabases" value=""/>
+        <property name="defaultDatabase" value="dsp"/>
     </bean>
 
+    <bean id="mongoDataSource2" class="com.tasfe.framework.mongo.support.core.SimpleMongoDataSource">
+        <property name="hosts" value="120.132.102.112"/>
+        <property name="ports" value="27017"/>
+        <property name="userNames" value=""/>
+        <property name="passwords" value=""/>
+        <property name="authDatabases" value=""/>
+        <property name="defaultDatabase" value="admin"/>
+    </bean>
     <bean id="mongoFactory" class="com.tasfe.framework.mongo.factory.MongoFactory">
         <property name="mongoDataSources">
             <map key-type="java.lang.String">

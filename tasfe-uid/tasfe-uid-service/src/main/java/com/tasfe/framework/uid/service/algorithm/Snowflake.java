@@ -1,4 +1,4 @@
-package com.tasfe.framework.uid.snowflake;
+package com.tasfe.framework.uid.service.algorithm;
 
 /**
  * 基于Snowflake算法生成ID

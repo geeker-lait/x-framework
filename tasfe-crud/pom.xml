@@ -12,6 +12,7 @@
     <modules>
         <module>tasfe-crud-api</module>
         <module>tasfe-crud-core</module>
+        <module>tasfe-crud-mongo</module>
         <module>tasfe-crud-mysql</module>
     </modules>
 

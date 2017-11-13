@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>com.tasfe.framework</groupId>
-            <artifactId>tasfe-uid-common</artifactId>
+            <artifactId>tasfe-uid-service</artifactId>
         </dependency>
 
     </dependencies>

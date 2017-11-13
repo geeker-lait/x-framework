@@ -7,7 +7,7 @@
         <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-    <artifactId>tasfe-netty</artifactId>
+    <artifactId>tasfe-data</artifactId>
     <packaging>jar</packaging>
 
     <dependencies>
