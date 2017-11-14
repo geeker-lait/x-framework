@@ -16,6 +16,15 @@ public class ResponseData<T> implements Serializable {
     private String code;
     private T data;
 
+    public ResponseData(){}
+
+    public ResponseData(String status,String error,String msg,T data){
+            this.status=status;
+            this.error=error;
+            this.msg=msg;
+            this.data=data;
+    }
+
     public static ResponseData<?> success(){
         ResponseData responseData = new ResponseData();
         responseData.setStatus("0");

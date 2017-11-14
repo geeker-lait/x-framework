@@ -4,6 +4,7 @@ package com.tasfe.framework.support.service;
 import com.tasfe.framework.crud.api.criteria.Criteria;
 import com.tasfe.framework.crud.api.params.Page;
 
+import javax.management.Query;
 import java.io.Serializable;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public interface CrudService<M,E,PK extends Serializable> {
      *
      * @param entity 需要添加的对象
      */
-    void save(E entity) throws Exception;
+    void save(E entity);
 
     /**
      * 批量保存对象
@@ -28,7 +29,7 @@ public interface CrudService<M,E,PK extends Serializable> {
      * @param entitys 需要增加的对象的集合
      *                失败会抛异常
      */
-    void save(List<E> entitys) throws Exception;
+    void save(List<E> entitys);
 
     /**
      * 删除对象
@@ -36,7 +37,7 @@ public interface CrudService<M,E,PK extends Serializable> {
      * @param model 需要删除的对象
      *               失败会抛异常
      */
-    void delete(M model, Criteria criteria) throws Exception;
+    void delete(M model, Criteria criteria);
 
     /**
      * 批量删除对象
@@ -44,18 +45,18 @@ public interface CrudService<M,E,PK extends Serializable> {
      * @param entitys 需要删除的对象的集合
      *                失败会抛异常
      */
-    void delete(List<M> entitys, Criteria criteria) throws Exception;
+    void delete(List<M> entitys, Criteria criteria);
 
     /**
      * @param id
      * @throws Exception
      */
-    void delete(PK... id) throws Exception;
+    void delete(PK... id);
 
 
-    void update(M model, Criteria criteria) throws Exception;
+    void update(M model, Criteria criteria);
 
-    void update(List<M> models, Criteria criteria) throws Exception;
+    void update(List<M> models, Criteria criteria);
 
     /**
      * 更新或保存对象
@@ -63,7 +64,7 @@ public interface CrudService<M,E,PK extends Serializable> {
      * @param entity 需要更新的对象
      *               失败会抛出异常
      */
-    void saveOrUpdate(E entity) throws Exception;
+    void saveOrUpdate(E entity);
 
     /**
      * 批量更新或保存对象
@@ -71,7 +72,7 @@ public interface CrudService<M,E,PK extends Serializable> {
      * @param entitys 需要更新或保存的对象
      *                失败会抛出异常
      */
-    void saveOrUpdate(List<E> entitys) throws Exception;
+    void saveOrUpdate(List<E> entitys);
 
     /**
      * 通过主键, 查询对象
@@ -79,7 +80,7 @@ public interface CrudService<M,E,PK extends Serializable> {
      * @param id 主键(Serializable)
      * @return model
      */
-    M get(PK id) throws Exception;
+    M get(PK id);
 
 
     /**
@@ -87,7 +88,7 @@ public interface CrudService<M,E,PK extends Serializable> {
      * @return
      * @throws Exception
      */
-    List<M> gets(PK... id) throws Exception;
+    List<M> gets(PK... id);
 
 
     /**
@@ -95,7 +96,7 @@ public interface CrudService<M,E,PK extends Serializable> {
      *
      * @return List
      */
-    List<M> find(M model, Criteria criteria) throws Exception;
+    List<M> find(M model, Criteria criteria);
 
 
     /**
@@ -103,7 +104,16 @@ public interface CrudService<M,E,PK extends Serializable> {
      *
      * @return List
      */
-    List<M> find(Criteria criteria) throws Exception;
+    List<M> find(Criteria criteria);
+
+    /**
+     * 唯一查询
+     *add by zhujunjie
+     * @param model
+     * @param criteria
+     * @return 查询结果
+     */
+    M findOne(M model,Criteria criteria);
 
     /**
      * 分页查询
@@ -112,10 +122,20 @@ public interface CrudService<M,E,PK extends Serializable> {
      * @param criteria
      * @return 查询结果
      */
-    Page<M> paging(M model, Criteria criteria) throws Exception;
+    Page<M> paging(M model, Criteria criteria);
 
 
-    Page<M> paging(Criteria criteria) throws Exception;
+    Page<M> paging(Criteria criteria);
 
+
+
+    /**
+     * 获得数量 利用Count(*)实现
+     *
+     * @return 数量
+     */
+    long count(M model,Criteria criteria);
+
+    long count(Criteria criteria);
 
 }

@@ -6,6 +6,9 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import net.sf.cglib.reflect.FastClass;
 import net.sf.cglib.reflect.FastMethod;
 import org.slf4j.Logger;
@@ -13,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
+@Data
 public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RpcHandler.class);

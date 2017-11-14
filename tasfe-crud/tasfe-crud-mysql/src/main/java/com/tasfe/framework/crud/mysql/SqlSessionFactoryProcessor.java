@@ -7,9 +7,13 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.TypedStringValue;
+import org.springframework.beans.factory.support.ManagedList;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Lait on 2017/7/7.
@@ -31,15 +35,15 @@ public class SqlSessionFactoryProcessor implements BeanFactoryPostProcessor {
     private final static String DELETE_MAPPER = "META-INF/mybatis/mappers/DeleteMapper.xml";
     private final static String FUNCTION_MAPPER = "META-INF/mybatis/mappers/FunctionMapper.xml";
 
-    private Resource resources[] = new Resource[6];
-
-    {
-        resources[0] = new ClassPathResource(INSERT_MAPPER);
-        resources[1] = new ClassPathResource(UPDATE_MAPPER);
-        resources[2] = new ClassPathResource(SELECT_MAPPER);
-        resources[3] = new ClassPathResource(DELETE_MAPPER);
-        resources[4] = new ClassPathResource(FUNCTION_MAPPER);
-    }
+    private List<Resource> resources = new LinkedList<Resource>(){
+        {
+            add(new ClassPathResource(INSERT_MAPPER));
+            add( new ClassPathResource(UPDATE_MAPPER));
+            add(new ClassPathResource(SELECT_MAPPER));
+            add(new ClassPathResource(DELETE_MAPPER));
+            add(new ClassPathResource(FUNCTION_MAPPER));
+        }
+    };
 
 
     @Override
@@ -71,23 +75,29 @@ public class SqlSessionFactoryProcessor implements BeanFactoryPostProcessor {
             String proName = "mapperLocations";
             //Resource resource = new ClassPathResource(MAPPER_LOCATION_PATH);
             if (mutablePropertyValues.contains(proName)) {
-                /**
-                 * 强转
-                 */
-                TypedStringValue typedStringValue = (TypedStringValue) mutablePropertyValues.getPropertyValue(proName).getValue();
-                String mapperLocations = typedStringValue.getValue();
-                //typedStringValue.setValue(mapperLocations + "," + MAPPER_LOCATION_PATH);
-
-                /*resources = new Resource[];
-                System.arraycopy(res, 0, resources, 1, res.length);
-                resources[0] = resource;*/
-                /*Resource resources[] = new Resource[2];
-                resources[0] = resource;*/
-                resources[5] = new ClassPathResource(mapperLocations);
-                mutablePropertyValues.addPropertyValue(proName, resources);
+                String mapperLocations = "";
+                Object object = mutablePropertyValues.getPropertyValue(proName).getValue();
+                if ((object instanceof TypedStringValue))
+                {
+                    TypedStringValue typedStringValue = (TypedStringValue)object;
+                    mapperLocations = typedStringValue.getValue();
+                    this.resources.add(new ClassPathResource(mapperLocations));
+                }
+                else if ((object instanceof ManagedList))
+                {
+                    ManagedList managedList = (ManagedList)object;
+                    for (Object obj : managedList) {
+                        if ((obj instanceof TypedStringValue))
+                        {
+                            TypedStringValue typedStringValue = (TypedStringValue)obj;
+                            mapperLocations = typedStringValue.getValue();
+                            this.resources.add(new ClassPathResource(mapperLocations));
+                        }
+                    }
+                }
+                mutablePropertyValues.addPropertyValue(proName, this.resources.toArray());
             } else {
-                Resource resources[] = this.resources;
-                mutablePropertyValues.add(proName, resources);
+                mutablePropertyValues.add(proName, this.resources.toArray());
             }
             //sqlSessionFactoryBean.setMapperLocations(resources);
         } catch (Exception e) {

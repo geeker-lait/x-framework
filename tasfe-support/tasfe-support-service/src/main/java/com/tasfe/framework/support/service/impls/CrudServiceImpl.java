@@ -3,10 +3,12 @@ package com.tasfe.framework.support.service.impls;
 import com.tasfe.framework.crud.api.criteria.Criteria;
 import com.tasfe.framework.crud.api.params.Page;
 import com.tasfe.framework.crud.core.CrudTemplate;
+import com.tasfe.framework.support.exception.DaoException;
 import com.tasfe.framework.support.service.CrudService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.management.Query;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
@@ -46,8 +48,12 @@ public abstract class CrudServiceImpl<M, E, PK extends Serializable> implements 
      * @param model 需要添加的对象
      */
     @Override
-    public void save(E model) throws Exception {
-        crudTemplate.save(model);
+    public void save(E model){
+        try {
+            crudTemplate.save(model);
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
+        }
     }
 
     /**
@@ -57,8 +63,12 @@ public abstract class CrudServiceImpl<M, E, PK extends Serializable> implements 
      *                  失败会抛异常
      */
     @Override
-    public void save(List<E> modelList) throws Exception {
-        crudTemplate.save(modelList);
+    public void save(List<E> modelList){
+        try{
+            crudTemplate.save(modelList);
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
+        }
     }
 
     /**
@@ -68,8 +78,12 @@ public abstract class CrudServiceImpl<M, E, PK extends Serializable> implements 
      *              失败会抛异常
      */
     @Override
-    public void delete(M model, Criteria criteria) throws Exception {
-        crudTemplate.delete(model, criteria);
+    public void delete(M model, Criteria criteria){
+        try{
+            crudTemplate.delete(model, criteria);
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
+        }
     }
 
     /**
@@ -79,9 +93,13 @@ public abstract class CrudServiceImpl<M, E, PK extends Serializable> implements 
      *                失败会抛异常
      */
     @Override
-    public void delete(List<M> entitys, Criteria criteria) throws Exception {
-        for (M entity : entitys) {
-            crudTemplate.delete(entity, criteria);
+    public void delete(List<M> entitys, Criteria criteria){
+        try{
+            for (M entity : entitys) {
+                crudTemplate.delete(entity, criteria);
+            }
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
         }
     }
 
@@ -91,21 +109,34 @@ public abstract class CrudServiceImpl<M, E, PK extends Serializable> implements 
      * @param id 需要删除的对象的id
      *           失败抛出异常
      */
+    @SafeVarargs
     @Override
-    public void delete(PK... id) throws Exception {
-        crudTemplate.delete(modelClass, id);
+    public final void delete(PK... id){
+        try{
+            crudTemplate.delete(modelClass, id);
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
+        }
     }
 
 
     @Override
-    public void update(M entity, Criteria criteria) throws Exception {
-        crudTemplate.update(entity, criteria);
-    }
-
-    @Override
-    public void update(List<M> entitys, Criteria criteria) throws Exception {
-        for (M entity : entitys) {
+    public void update(M entity, Criteria criteria){
+        try{
             crudTemplate.update(entity, criteria);
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
+        }
+    }
+
+    @Override
+    public void update(List<M> entitys, Criteria criteria){
+        try{
+            for (M entity : entitys) {
+                crudTemplate.update(entity, criteria);
+            }
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
         }
     }
 
@@ -116,8 +147,12 @@ public abstract class CrudServiceImpl<M, E, PK extends Serializable> implements 
      *              失败会抛出异常
      */
     @Override
-    public void saveOrUpdate(E model) throws Exception {
-        crudTemplate.save(model);
+    public void saveOrUpdate(E model){
+        try{
+            crudTemplate.save(model);
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
+        }
     }
 
     /**
@@ -127,8 +162,12 @@ public abstract class CrudServiceImpl<M, E, PK extends Serializable> implements 
      *                  失败会抛出异常
      */
     @Override
-    public void saveOrUpdate(final List<E> modelList) throws Exception {
-        crudTemplate.save(modelList);
+    public void saveOrUpdate(final List<E> modelList){
+        try{
+            crudTemplate.save(modelList);
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
+        }
     }
 
     /**
@@ -138,38 +177,78 @@ public abstract class CrudServiceImpl<M, E, PK extends Serializable> implements 
      * @return model
      */
     @Override
-    public M get(PK id) throws Exception {
-        E e = crudTemplate.get(entityClass, id);
-        M m = modelClass.newInstance();
-        BeanUtils.copyProperties(e,m);
-        return m;
+    public M get(PK id){
+        try{
+            E e = crudTemplate.get(entityClass, id);
+            M m = modelClass.newInstance();
+            BeanUtils.copyProperties(e,m);
+            return m;
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
+        }
+    }
+
+    @SafeVarargs
+    @Override
+    public final List<M> gets(PK... id){
+        try{
+            return crudTemplate.list(modelClass, id);
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
+        }
     }
 
     @Override
-    public List<M> gets(PK... id) throws Exception {
-        return crudTemplate.list(modelClass, id);
+    public List<M> find(Criteria criteria){
+        try{
+            M model= modelClass.newInstance();
+            return crudTemplate.find(model, criteria);
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
+        }
     }
 
     @Override
-    public List<M> find(Criteria criteria) throws Exception {
-        M model= modelClass.newInstance();
-        return crudTemplate.find(model, criteria);
+    public List<M> find(M model, Criteria criteria){
+        try{
+            return crudTemplate.find(model, criteria);
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
+        }
+
     }
 
     @Override
-    public List<M> find(M model, Criteria criteria) throws Exception {
-        return crudTemplate.find(model, criteria);
+    public M findOne(M model,Criteria criteria){
+        try{
+            List<M> list=crudTemplate.find(model, criteria.limit(0,1));
+            if(list!=null&&list.size()>0){
+                return list.get(0);
+            }
+            return null;
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
+        }
+    }
+
+
+    @Override
+    public Page<M> paging(Criteria criteria){
+        try{
+            M model = modelClass.newInstance();
+            return crudTemplate.paging(model, criteria);
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
+        }
     }
 
     @Override
-    public Page<M> paging(Criteria criteria) throws Exception {
-        M model = modelClass.newInstance();
-        return crudTemplate.paging(model, criteria);
-    }
-
-    @Override
-    public Page<M> paging(M model, Criteria criteria) throws Exception {
-        return crudTemplate.paging(model, criteria);
+    public Page<M> paging(M model, Criteria criteria){
+        try{
+            return crudTemplate.paging(model, criteria);
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
+        }
     }
 
 
@@ -180,20 +259,42 @@ public abstract class CrudServiceImpl<M, E, PK extends Serializable> implements 
      * @param pageSize          每页数量
      * @return 查询结果
      */
-    public List<M> list(final Integer currentPageNumber, final Integer pageSize) throws Exception {
+    public List<M> list(final Integer currentPageNumber, final Integer pageSize){
         return null;
     }
-
 
     /**
      * 获得数量 利用Count(*)实现
      *
      * @return 数量
      */
-    public long count() throws Exception {
+    @Override
+    public long count(M model,Criteria criteria){
+        try{
+            return crudTemplate.count(model, criteria);
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
+        }
+    }
+
+    /**
+     * 获得数量 利用Count(*)实现
+     *
+     * @return 数量
+     */
+    @Override
+    public long count(Criteria criteria){
         //return crudTemplate.count();
         //return baseDao.getCount(modelClass);
-        return crudTemplate.count(null, null);
+        try{
+            M model = modelClass.newInstance();
+            return crudTemplate.count(model, criteria);
+        } catch (Exception e) {
+            throw new DaoException("dao操作异常！",e);
+        }
     }
+
+
+
 
 }
