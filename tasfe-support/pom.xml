@@ -12,6 +12,7 @@
 
     <modules>
         <module>tasfe-support-api</module>
+        <module>tasfe-support-entity</module>
         <module>tasfe-support-model</module>
         <module>tasfe-support-service</module>
     </modules>

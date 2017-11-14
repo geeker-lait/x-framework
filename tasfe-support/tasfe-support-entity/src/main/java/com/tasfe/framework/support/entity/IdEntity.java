@@ -1,4 +1,4 @@
-package com.tasfe.framework.support.model.entity;
+package com.tasfe.framework.support.entity;
 
 import lombok.Data;
 
