@@ -13,25 +13,11 @@ import java.io.Serializable;
 @Data
 public abstract class IdEntity<PK extends Serializable> /*implements Persistable<PK>*/ {
 
-
-    /*
-     @GenericGenerator(name = "generatedkey", strategy = "uuid")
-     @GeneratedValue(generator = "generatedkey")
-     @Column(length = 32)
-     */
+    //@GenericGenerator(name = "generatedkey", strategy = "uuid")
     //@GenericGenerator(name = "slid", strategy = IdGenerator.TYPE)
     @GeneratedValue(generator = "slid")
     @Column(length = 32)
     @Id
     private PK id;
-
-
-   /* @Id
-    @GeneratedValue(generator = "generatedkey")
-    @GenericGenerator(name = "generatedkey", strategy = "uuid")
-    @Column(length = 32)
-    protected String id;
-
-    */
 
 }

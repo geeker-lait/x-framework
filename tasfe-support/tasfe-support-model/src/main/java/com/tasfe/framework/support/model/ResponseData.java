@@ -19,8 +19,16 @@ public class ResponseData<T> implements Serializable {
     public static ResponseData<?> success(){
         ResponseData responseData = new ResponseData();
         responseData.setStatus("0");
-        responseData.setMsg("");
+        responseData.setMsg("success");
         responseData.setData(null);
+        return responseData;
+    }
+
+    public static <T>ResponseData<?> success(T data){
+        ResponseData responseData = new ResponseData();
+        responseData.setStatus("0");
+        responseData.setMsg("success");
+        responseData.setData(data);
         return responseData;
     }
 
@@ -29,6 +37,22 @@ public class ResponseData<T> implements Serializable {
         responseData.setStatus("1");
         responseData.setMsg("");
         responseData.setData(null);
+        return responseData;
+    }
+
+    public static ResponseData<?> error(String msg){
+        ResponseData responseData = new ResponseData();
+        responseData.setStatus("1");
+        responseData.setMsg(msg);
+        responseData.setData(null);
+        return responseData;
+    }
+
+    public <T>ResponseData<?> error(T data){
+        ResponseData responseData = new ResponseData();
+        responseData.setStatus("1");
+        responseData.setMsg("error");
+        responseData.setData(data);
         return responseData;
     }
 
