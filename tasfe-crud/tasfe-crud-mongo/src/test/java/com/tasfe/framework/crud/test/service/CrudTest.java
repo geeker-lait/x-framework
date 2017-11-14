@@ -9,7 +9,7 @@ import com.tasfe.framework.crud.test.model.entity.Member;
 import com.tasfe.framework.crud.test.model.entity.Resources;
 import com.tasfe.framework.crud.test.model.entity.User;
 import com.tasfe.framework.crud.test.model.entity.UserSession;
-import org.hibernate.annotations.SourceType;
+//import org.hibernate.annotations.SourceType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeanUtils;

@@ -10,7 +10,6 @@ import com.tasfe.framework.crud.api.annotation.Storager;
 import lombok.Data;
 import org.apache.ibatis.type.Alias;
 
-import com.tasfe.framework.crud.mysql.type.DataState;
 
 import java.util.Date;
 
@@ -56,7 +55,7 @@ public class User{
 
 
 
-    private DataState status;
+    //private DataState status;
 
     public User() {
     }
@@ -101,7 +100,6 @@ public class User{
                 ", email='" + email + '\'' +
                 ", job='" + job + '\'' +
                 ", birth=" + birth +
-                ", status=" + status +
                 '}';
     }
 }

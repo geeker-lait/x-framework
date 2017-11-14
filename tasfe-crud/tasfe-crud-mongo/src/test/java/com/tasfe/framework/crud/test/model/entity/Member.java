@@ -2,7 +2,6 @@ package com.tasfe.framework.crud.test.model.entity;
 
 import com.tasfe.framework.crud.api.annotation.Sharding;
 import com.tasfe.framework.crud.api.annotation.Storager;
-import com.tasfe.framework.crud.mysql.type.DataState;
 import org.apache.ibatis.type.Alias;
 
 import javax.persistence.Id;
@@ -39,7 +38,7 @@ public class Member {
 
     private Integer orderId;
 
-    private DataState status;
+    //private DataState status;
 
     public Member() {
     }
@@ -134,13 +133,6 @@ public class Member {
     }
 
 
-    public DataState getStatus() {
-        return status;
-    }
-
-    public void setStatus(DataState status) {
-        this.status = status;
-    }
 
     @Override
     public int hashCode() {
@@ -171,6 +163,6 @@ public class Member {
     public String toString() {
         return "Member [userId=" + userId + ", deptId=" + deptId + ", userName=" + userName + ", id=" + id
                 + ", password=" + password + ", mobilePhone=" + mobilePhone + ", officePhone=" + officePhone
-                + ", email=" + email + ", job=" + job + ", orderId=" + orderId + ", status=" + status + "]";
+                + ", email=" + email + ", job=" + job + ", orderId=" + orderId +  "]";
     }
 }
