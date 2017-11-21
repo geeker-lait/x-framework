@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd ">
+
+    <!-- 引入配置文件,这里不在引入由统一配置引入-->
+    <bean id="redis_propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="locations">
+            <value>classpath:/jedis.properties</value>
+        </property>
+    </bean>
+
+
+    <!-- 启用组件注解扫描  -->
+    <context:component-scan base-package="com.tasfe.framework.uid.service"/>
+
+    <!-- redisCluster 连接池配置-->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="${jedis.maxIdle}"/>
+        <property name="maxTotal" value="${jedis.maxTotal}"/>
+        <property name="maxWaitMillis" value="${jedis.maxWait}"/>
+        <property name="testOnBorrow" value="${jedis.testOnBorrow}"/>
+    </bean>
+
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
+        <constructor-arg name="host" value="${jedis.host}"/>
+        <constructor-arg name="port" value="${jedis.port}"/>
+        <constructor-arg name="timeout" value="${jedis.timeout}"/>
+    </bean>
+
+</beans>

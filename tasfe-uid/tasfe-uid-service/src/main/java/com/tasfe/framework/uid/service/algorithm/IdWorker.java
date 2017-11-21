@@ -1,4 +1,4 @@
-package com.tasfe.framework.uid.service.impls;
+package com.tasfe.framework.uid.service.algorithm;
 
 import java.util.Random;
 

@@ -46,6 +46,5 @@ public class UidBootstrap {
             size = size - (31 * times);
         }
         snowflake.setWorkerId(size);
-        snowflake.setWorkerId(size);
     }
 }
