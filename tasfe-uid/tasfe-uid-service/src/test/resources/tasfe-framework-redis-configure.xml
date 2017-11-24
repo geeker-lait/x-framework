@@ -4,11 +4,11 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:p="http://www.springframework.org/schema/p"
         xmlns:context="http://www.springframework.org/schema/context"
-        xsi:schemaLocation="
-		http://www.springframework.org/schema/beans 
+        xmlns:cache="http://www.springframework.org/schema/cache"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context 
-		http://www.springframework.org/schema/context/spring-context.xsd ">
+		http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
     <!-- 引入配置文件,这里不在引入由统一配置引入-->
     <bean id="redis_propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -36,5 +36,63 @@
         <constructor-arg name="port" value="${jedis.port}"/>
         <constructor-arg name="timeout" value="${jedis.timeout}"/>
     </bean>
+
+
+
+    <!-- redisCluster 连接池配置-->
+    <!--<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="${redis.maxIdle}"/>
+        <property name="maxTotal" value="${redis.maxTotal}"/>
+        <property name="maxWaitMillis" value="${redis.maxWait}"/>
+        <property name="testOnBorrow" value="${redis.testOnBorrow}"/>
+    </bean>-->
+
+    <!-- redisCluster 服务中心 -->
+    <bean id="connectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <!-- <constructor-arg name="clusterConfig" ref="redisClusterConfiguration"/>-->
+        <constructor-arg name="poolConfig" ref="jedisPoolConfig"/>
+        <!--单机 模式 加hostName-->
+        <property name="hostName" value="120.132.102.112"/>
+    </bean>
+
+    <!-- RedisTemplate 配置 -->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+        <property name="connectionFactory" ref="connectionFactory"/>
+    </bean>
+
+
+   <!-- <bean class="org.springframework.data.redis.support.atomic.RedisAtomicLong">
+        <constructor-arg index="0" type="java.lang.String" value=""/>
+        <constructor-arg index="1" type="org.springframework.data.redis.connection.RedisConnectionFactory" ref="connectionFactory"/>
+    </bean>-->
+
+    <!-- 启用缓存注解功能，这个是必须的，否则注解不会生效，另外，该注解一定要声明在spring主配置文件中才会生效 -->
+    <!--<cache:annotation-driven cache-manager="cacheManager" />-->
+
+    
+    <!--<bean id="duration" class="java.time.Duration">
+        <constructor-arg index="0" value="0"/>
+        <constructor-arg index="1" value="0"/>
+    </bean>
+    
+    <bean id="cacheWriter" class="org.springframework.data.redis.cache.DefaultRedisCacheWriter">
+        <constructor-arg index="0" ref="connectionFactory"/>
+        <constructor-arg index="1" ref="duration"/>
+    </bean>
+    
+    <bean id="cacheConfiguration" class="org.springframework.data.redis.cache.RedisCacheConfiguration">
+        <constructor-arg index="0" ref=""/>
+        <constructor-arg index="1" value=""/>
+        <constructor-arg index="2" value=""/>
+        <constructor-arg index="3" value=""/>
+        <constructor-arg index="4" ref=""/>
+        <constructor-arg index="5" ref=""/>
+        <constructor-arg index="6" ref=""/>
+    </bean>
+    
+    <bean id="cacheManager" class="org.springframework.data.redis.cache.RedisCacheManager">
+        <constructor-arg index="0" ref="cacheWriter"/>
+        <constructor-arg index="1" ref="cacheConfiguration"/>
+    </bean>-->
 
 </beans>

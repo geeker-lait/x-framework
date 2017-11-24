@@ -11,5 +11,5 @@ public interface IdGenerator /*implements IdentifierGenerator*/ {
      * @author butterfly
      * @return
      */
-    Long generatorId(String biz) throws Exception ;
+    Long generatorId(BizCode bizCode) throws Exception ;
 }

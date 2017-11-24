@@ -1,5 +1,6 @@
 package com.tasfe.framework.uid.service.impls;
 
+import com.tasfe.framework.uid.service.BizCode;
 import com.tasfe.framework.uid.service.IdGenerator;
 import com.tasfe.framework.uid.service.algorithm.IdWorker;
 
@@ -20,8 +21,9 @@ public class DefaultIdGenerator implements IdGenerator /*IdentifierGenerator*/ {
        return null;
     }
 
+
     @Override
-    public Long generatorId(String biz) {
-        return idWorker.getId();
+    public Long generatorId(BizCode bizCode) throws Exception {
+        return null;
     }
 }
