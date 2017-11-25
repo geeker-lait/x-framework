@@ -52,7 +52,7 @@ public class UidTest {
     @Test
     public void incrOrderId() throws Exception {
         ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 9000; i++) {
             cachedThreadPool.execute(new Runnable() {
                 @Override
                 public void run() {

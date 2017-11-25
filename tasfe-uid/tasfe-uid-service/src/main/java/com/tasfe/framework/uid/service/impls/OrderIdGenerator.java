@@ -65,7 +65,7 @@ public class OrderIdGenerator {
 
             jedis = jedisPool.getResource();
             Long index = jedis.incr(key);
-            // 设置一小时后超时，清楚key
+            // 设置1099后超时key
             jedis.expire(key, 999 + 100);
 
             // 补位操作 保证满足3位

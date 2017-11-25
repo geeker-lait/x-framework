@@ -31,6 +31,15 @@ public class JedisIdFactory implements IdGenerator {
     @Autowired
     private JedisIncr jedisIncr;
 
+
+
+
+
+
+
+
+
+
     /**
      * @return
      * @Description 生成分布式ID

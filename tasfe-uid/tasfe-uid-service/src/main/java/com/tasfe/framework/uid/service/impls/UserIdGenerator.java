@@ -75,7 +75,7 @@ public class UserIdGenerator {
             jedis = jedisPool.getResource();
             Long index = jedis.incr(key);
             // 设置一小时后超时，清楚key
-            jedis.expire(key,60*60+100);
+            jedis.expire(key,60*60*60+1000);
 
             // 补位操作 保证满足5位
             id = prefix.concat(String.format("%1$05d", index));
