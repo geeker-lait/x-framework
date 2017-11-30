@@ -10,16 +10,20 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 		http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd">
 
+	<!-- 实际发送的 -->
+	<bean id="rabbitmqProducerProxy" class="com.tasfe.framework.rabbitmq.RabbitmqProducerProxy">
+		<property name="rabbitTemplate" ref="amqpTemplate"/>
+	</bean>
 
-	<rabbit:connection-factory id="connectionFactory" host="127.0.0.1" port="5672" username="guest" password="guest"/>
+	<bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.Jackson2JsonMessageConverter"/>
 
-	<rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="order_topic_exchange"/>
-
+	<rabbit:connection-factory id="connectionFactory" host="192.168.10.19" port="5672" username="root" password="8P4v@@i3368R8v"/>
 	<rabbit:admin connection-factory="connectionFactory"/>
+	<rabbit:template id="amqpTemplate" connection-factory="connectionFactory"  exchange="test_topic_exchange" message-converter="jsonMessageConverter"/>
 
-	<rabbit:queue name="userQueue" durable="true"/>
+	<rabbit:queue name="testQueue" durable="true"/>
 
-	<rabbit:queue name="orderPayQueryQueue" durable="true" auto-delete="false" exclusive="false">
+	<!--<rabbit:queue name="orderPayQueryQueue" durable="true" auto-delete="false" exclusive="false">
 		<rabbit:queue-arguments>
 			<entry key="x-message-ttl">
 				<value type="java.lang.Long">600000</value>
@@ -35,21 +39,22 @@
 			<rabbit:binding queue="orderPayDelayQueryQueue" pattern="orderPay.#"/>
 		</rabbit:bindings>
 	</rabbit:topic-exchange>
-
-	<rabbit:topic-exchange name="user_topic_exchange">
+-->
+	<rabbit:topic-exchange name="test_topic_exchange">
 		<rabbit:bindings>
-			<rabbit:binding queue="userQueue" pattern="sps.#"/>
-			<rabbit:binding queue="orderPayQueryQueue" pattern="orderPay.#"/>
+			<rabbit:binding queue="testQueue" pattern="lait.#"/>
+			<!--<rabbit:binding queue="orderPayQueryQueue" pattern="orderPay.#"/>-->
 		</rabbit:bindings>
 	</rabbit:topic-exchange>
 
-	<!-- 实际发送的 -->
-	<bean id="rabbitmqProducerProxy" class="com.tasfe.framework.rabbitmq.RabbitmqProducerProxy">
-		<property name="rabbitTemplate" ref="amqpTemplate"/>
-	</bean>
 
-	<bean id="messageProperties" class="org.springframework.amqp.core.MessageProperties">
+
+
+
+
+
+	<!--<bean id="messageProperties" class="org.springframework.amqp.core.MessageProperties">
 		<property name="contentType" value="application/json"/>
-	</bean>
+	</bean>-->
 
 </beans>

@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.ChannelAwareMessageListener;
+import org.springframework.amqp.rabbit.listener.adapter.AbstractAdaptableMessageListener;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.InitializingBean;
 
@@ -19,12 +20,13 @@ import java.util.concurrent.TimeUnit;
  * Created by Lait on 10/17/2016.
  */
 @Setter
-public class RabbitmqConsumerProxy implements ChannelAwareMessageListener, InitializingBean {
+public class RabbitmqConsumerProxy extends AbstractAdaptableMessageListener implements ChannelAwareMessageListener, InitializingBean {
     private Logger logger = LoggerFactory.getLogger(RabbitmqConsumerProxy.class);
 
     private RabbitmqMessageProcesser rabbitmqMessageProcesser;
 
     private MessageConverter messageConverter;
+
 
     /*private int threadNum = 5;
     private int maxQueueSize = 2000;
@@ -60,6 +62,7 @@ public class RabbitmqConsumerProxy implements ChannelAwareMessageListener, Initi
             //Cat.logMetricForCount("RabbitmqConsumerProxy.onMessage(final Message message, final Channel channel).count");
             //trans.setStatus("0");
             rabbitmqMessageProcesser.processMessage(msg);
+
             channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
         } catch (Exception ae) {
             // trans.setStatus(ae);
