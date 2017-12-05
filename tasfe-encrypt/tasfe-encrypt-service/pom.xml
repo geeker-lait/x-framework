@@ -24,5 +24,21 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.tasfe.framework</groupId>
+            <artifactId>tasfe-support-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.tasfe.framework</groupId>
+            <artifactId>tasfe-encrypt-model-bo</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tasfe.framework</groupId>
+            <artifactId>tasfe-encrypt-model-entity</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 </project>

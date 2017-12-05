@@ -12,9 +12,9 @@ public interface EncryptContract {
      * @param <T> 返回加密过后的序列化对象
      * @return
      */
-    <T>ResponseData<T> encrypt(EncryptRequest encryptRequest,Class<?> clazz);
+    <T>ResponseData<T> encrypt(EncryptRequest encryptRequest);
 
 
-    <T>ResponseData<T> decrypt(DecryptRequest decryptRequest,Class<?> clazz);
+    <T>ResponseData<T> decrypt(DecryptRequest decryptRequest);
 
 }

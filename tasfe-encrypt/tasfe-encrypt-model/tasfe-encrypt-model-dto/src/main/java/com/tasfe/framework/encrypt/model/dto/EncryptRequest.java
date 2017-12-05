@@ -12,8 +12,10 @@ import java.io.Serializable;
  */
 @Data
 public class EncryptRequest implements Serializable {
-    // 加密需要的key,用于批量
+    // key
     private String key;
+    // 加密需要的key,用于批量
+    private String businessId;
     // 单个or批量
     private JSON data;
     // private JSONObject data;
@@ -28,10 +30,12 @@ public class EncryptRequest implements Serializable {
 
 
 
+
+
     public static void main(String[] args) {
         JSONArray jsonArray = new JSONArray();
         JSONObject jsonObject = new JSONObject();
-
+        //jsonArray.toJavaObject();
         jsonArray.add(jsonObject);
         System.out.println(jsonArray);
     }

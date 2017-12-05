@@ -23,9 +23,9 @@ public class EncryptServiceImpl implements EncryptContract,EncryptyService {
     @Encrypt()
     private String al;
     @Override
-    public <T> ResponseData<T> encrypt(EncryptRequest encryptRequest,Class<?> clazz) {
+    public <T> ResponseData<T> encrypt(EncryptRequest encryptRequest) {
         JSON data = encryptRequest.getData();
-        String key = encryptRequest.getKey();
+        String key = encryptRequest.getBusinessId();
 
         if(data instanceof JSONArray){
             JSONArray _data = (JSONArray)data;
@@ -51,7 +51,7 @@ public class EncryptServiceImpl implements EncryptContract,EncryptyService {
             JSONObject _data = (JSONObject)data;
         }
 
-        Map<String,Field> fieldMap = ReflectUtils.getBeanPropertyFieldsMap(clazz,true);
+        /*Map<String,Field> fieldMap = ReflectUtils.getBeanPropertyFieldsMap(clazz,true);
         fieldMap.forEach((i,f)->{
             Encrypt encrypt = f.getAnnotation(Encrypt.class);
 
@@ -62,7 +62,7 @@ public class EncryptServiceImpl implements EncryptContract,EncryptyService {
 
 
 
-        });
+        });*/
 
 
 
@@ -79,7 +79,7 @@ public class EncryptServiceImpl implements EncryptContract,EncryptyService {
     }
 
     @Override
-    public <T> ResponseData<T> decrypt(DecryptRequest decryptRequest,Class<?> clazz) {
+    public <T> ResponseData<T> decrypt(DecryptRequest decryptRequest) {
         return null;
     }
 

@@ -11,10 +11,6 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.InitializingBean;
 
 import java.io.IOException;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Lait on 10/17/2016.
@@ -38,8 +34,6 @@ public class RabbitmqConsumerProxy extends AbstractAdaptableMessageListener impl
 
     @Override
     public void onMessage(final Message message, final Channel channel) {
-        logger.info("开始处理消息: " + message.toString());
-
         // 获取对象
         Object msg = messageConverter.fromMessage(message);
         try {

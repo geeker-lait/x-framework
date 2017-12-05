@@ -635,7 +635,7 @@
                 <version>2.5.7</version>
                <!-- <exclusions>
                     <exclusion>
-                        <groupId>org.springframework</groupId>
+                        <groupId>org.springfram·ework</groupId>
                         <artifactId>spring</artifactId>
                     </exclusion>
                     <exclusion>
