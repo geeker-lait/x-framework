@@ -1,16 +1,14 @@
 package com.tasfe.framework.crud.core.utils;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.tasfe.framework.crud.core.encrypt.EncryptParams;
+import com.tasfe.framework.encrypt.api.annotation.Encrypt;
 import org.apache.ibatis.reflection.ReflectionException;
 import org.springframework.util.ReflectionUtils;
 
@@ -155,25 +153,41 @@ public class GeneralMapperReflectUtil {
      * @return columnName-value
      * @throws Exception
      */
-    public static <T> Map<String, String> getFieldValueMappingExceptNull(T t, boolean camelCase) throws Exception {
-        Map<String, String> mapping = new LinkedHashMap<String, String>();
-
+    public static <T> List<EncryptParams> getFieldValueMappingExceptNull(T t, boolean camelCase) throws Exception {
+        //Map<String, EncryptParams> mapping = new LinkedHashMap<>();
+        List<EncryptParams> encryptParamsList = new LinkedList<>();
         Field[] fields = t.getClass().getDeclaredFields();
-
         for (Field field : fields) {
             String fieldValue = FieldReflectUtil.getFieldStringValue(t, field);
 
             if (fieldValue != null) {
-                if (camelCase) {
-                    mapping.put(StringUtil.camelToUnderline(field.getName()), fieldValue);
+
+                Encrypt encrypt = field.getAnnotation(Encrypt.class);
+                EncryptParams encryptParams = new EncryptParams();
+                String key = encrypt.value();
+                // 如果没有默认的值,就给字段的名字
+                if(key != null){
+                    encryptParams.setKey(key);
                 } else {
-                    mapping.put(field.getName(), fieldValue);
+                    encryptParams.setKey(field.getName());
                 }
 
+                if (camelCase) {
+                    encryptParams.setOrgKey(StringUtil.camelToUnderline(field.getName()));
+                    //mapping.put(StringUtil.camelToUnderline(field.getName()), encryptParams);
+                } else {
+                    encryptParams.setOrgKey(field.getName());
+                    //mapping.put(field.getName(), encryptParams);
+                }
+
+                // 包装encryptParams
+                encryptParams.setVal(fieldValue);
+
+                encryptParamsList.add(encryptParams);
             }
         }
 
-        return mapping;
+        return encryptParamsList;
     }
 
     /**

@@ -16,10 +16,15 @@ public class EncryptRequest implements Serializable {
     private String key;
     // 加密需要的key,用于批量
     private String businessId;
+    // 待加密数据
+    private String data;
     // 单个or批量
-    private JSON data;
+    //private JSON data;
     // private JSONObject data;
-
+    //单个
+    //private JSONObject data;
+    // 批量
+    //private JSONArray datas;
 
 
 
@@ -33,10 +38,11 @@ public class EncryptRequest implements Serializable {
 
 
     public static void main(String[] args) {
-        JSONArray jsonArray = new JSONArray();
-        JSONObject jsonObject = new JSONObject();
+        JSON jsonArray = new JSONArray();
+        JSON jsonObject = new JSONObject();
         //jsonArray.toJavaObject();
-        jsonArray.add(jsonObject);
+        //jsonArray.add(jsonObject);
+        System.out.println(jsonArray instanceof  JSONObject);
         System.out.println(jsonArray);
     }
 

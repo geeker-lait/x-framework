@@ -1,7 +1,9 @@
 package com.tasfe.framework.crud.mysql;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.tasfe.framework.crud.api.Crudable;
-import com.tasfe.framework.crud.api.configs.Configs;
 import com.tasfe.framework.crud.api.enums.Condition;
 import com.tasfe.framework.crud.api.enums.StoragerType;
 import com.tasfe.framework.crud.api.criteria.Criteria;
@@ -13,8 +15,11 @@ import com.tasfe.framework.crud.api.operator.mysql.RdbOperator;
 import com.tasfe.framework.crud.core.utils.FieldReflectUtil;
 import com.tasfe.framework.crud.core.utils.GeneralMapperReflectUtil;
 import com.tasfe.framework.crud.core.utils.StringUtil;
+import com.tasfe.framework.crud.core.encrypt.EncryptParams;
+import com.tasfe.framework.encrypt.api.EncryptContract;
+import com.tasfe.framework.encrypt.model.dto.EncryptRequest;
+import com.tasfe.framework.support.model.ResponseData;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -27,10 +32,7 @@ import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Lait on 2017/5/29.
@@ -41,6 +43,9 @@ public class MysqlTemplate extends CrudTemplate implements RdbOperator, Initiali
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
 
+    @Autowired(required = false)
+    private EncryptContract encryptContract;
+
     private SqlSession sqlSession;
 
     private boolean camelCase = false;
@@ -50,13 +55,39 @@ public class MysqlTemplate extends CrudTemplate implements RdbOperator, Initiali
         this.camelCase = sqlSessionFactory.getConfiguration().isMapUnderscoreToCamelCase();
     }
 
+
+
+    private <T>Map<String,String> encrypt(T t) throws Exception{
+        Map<String,String> mapping = new LinkedHashMap<>();
+        List<EncryptParams> encryptParamsList = GeneralMapperReflectUtil.getFieldValueMappingExceptNull(t, camelCase);
+        // 当不等于空的时候进行加密
+        if(encryptContract != null){
+            EncryptRequest encryptRequest = new EncryptRequest();
+            encryptRequest.setData(JSON.toJSONString(encryptParamsList));
+            ResponseData<String> responseData = encryptContract.encrypt(encryptRequest);
+            String data = responseData.getData();
+            if(data != null) {
+                encryptParamsList = JSON.parseArray(data, EncryptParams.class);
+                encryptParamsList.stream().forEach(ep->mapping.put(ep.getOrgKey(),ep.getVal()));
+            } else {
+                throw new Exception(responseData.getMsg());
+            }
+        } else {
+            encryptParamsList.stream().forEach(ep->mapping.put(ep.getOrgKey(),ep.getVal()));
+        }
+        return mapping;
+    }
+
     /********************************** in *************************************/
     @Override
     public <T> void _in(T t) throws Exception {
         Map<String, Object> param = new HashMap<>();
         Class<?> clazz = t.getClass();
         String tableName = GeneralMapperReflectUtil.getTableName(clazz);
-        Map<String, String> mapping = GeneralMapperReflectUtil.getFieldValueMappingExceptNull(t, camelCase);
+        //Map<String, EncryptParams> mapping = GeneralMapperReflectUtil.getFieldValueMappingExceptNull(t, camelCase);
+        // 进行加密过滤操作
+        Map<String,String> mapping = encrypt(t);
+
         param.put("_table_", tableName);
         param.put("_kv_mapping_", mapping);
         sqlSession.update(Crudable.IN, param);
@@ -83,7 +114,9 @@ public class MysqlTemplate extends CrudTemplate implements RdbOperator, Initiali
                 Class<?> clazz = t.getClass();
                 columns = GeneralMapperReflectUtil.getAllColumns(clazz, camelCase);
             }
-            Map<String, String> mapping = GeneralMapperReflectUtil.getAllFieldValueMapping(t);
+            //Map<String, String> mapping = GeneralMapperReflectUtil.getFieldValueMappingExceptNull(t,camelCase);
+            // 进行加密过滤操作
+            Map<String,String> mapping = encrypt(t);
             dataList.add(mapping);
         }
         param.put("_table_", tableName);
@@ -97,7 +130,9 @@ public class MysqlTemplate extends CrudTemplate implements RdbOperator, Initiali
     @Override
     public <T> int _upd(T t, Criteria criteria) throws Exception {
 
-        Map<String, String> mapping = GeneralMapperReflectUtil.getFieldValueMappingExceptNull(t, camelCase);
+        //Map<String, String> mapping = GeneralMapperReflectUtil.getFieldValueMappingExceptNull(t, camelCase);
+        // 进行加密过滤操作
+        Map<String,String> mapping = encrypt(t);
 
         String pk = null;
         Object pv = null;
@@ -230,7 +265,10 @@ public class MysqlTemplate extends CrudTemplate implements RdbOperator, Initiali
     @Override
     public <T> int _del(T entity, Criteria criteria) throws Exception {
         Map<String, Object> param = fillParams(null,criteria);
-        param.putAll(GeneralMapperReflectUtil.getFieldValueMappingExceptNull(entity, camelCase));
+        //GeneralMapperReflectUtil.getFieldValueMappingExceptNull(entity, camelCase);
+        // 进行加密过滤操作
+        Map<String,String> mapping = encrypt(entity);
+        param.putAll(mapping);
         return sqlSession.delete(Crudable.DELS, param);
     }
 
@@ -270,7 +308,10 @@ public class MysqlTemplate extends CrudTemplate implements RdbOperator, Initiali
     @Override
     public <T> Long _count(Class<T> clazz, CrudParam crudParam) throws Exception {
         Map<String, Object> param = fillParams(crudParam.getEntity(),crudParam.getCriteria());
-        param.putAll(GeneralMapperReflectUtil.getFieldValueMappingExceptNull(crudParam.getEntity(), camelCase));
+        //GeneralMapperReflectUtil.getFieldValueMappingExceptNull(crudParam.getEntity(), camelCase);
+        // 进行加密过滤操作
+        Map<String,String> mapping = encrypt(crudParam.getEntity());
+        param.putAll(mapping);
         Long totalSize = sqlSession.selectOne(Crudable.COUNT, param);
         return totalSize;
     }
@@ -365,7 +406,11 @@ public class MysqlTemplate extends CrudTemplate implements RdbOperator, Initiali
          */
         List<Kvc> finalKvcList;
         if(null != entity){
-            Map<String, String> kvMapping = GeneralMapperReflectUtil.getFieldValueMappingExceptNull(entity, camelCase);
+            //Map<String, String> kvMapping = GeneralMapperReflectUtil.getFieldValueMappingExceptNull(entity, camelCase);
+
+            // 进行加密过滤操作
+            Map<String,String> kvMapping = encrypt(entity);
+
             // 设置参数
             param.putAll(kvMapping);
             List<Kvc> kvcList = new ArrayList<>();
