@@ -113,7 +113,7 @@ public abstract class CrudServiceImpl<M, E, PK extends Serializable> implements 
     @Override
     public final void delete(PK... id){
         try{
-            crudTemplate.delete(modelClass, id);
+            crudTemplate.delete(entityClass, id);
         } catch (Exception e) {
             throw new DaoException("dao操作异常！",e);
         }
