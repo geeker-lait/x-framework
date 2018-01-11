@@ -60,6 +60,9 @@ public class MysqlTemplate extends CrudTemplate implements RdbOperator, Initiali
         param.put("_table_", tableName);
         param.put("_kv_mapping_", mapping);
         sqlSession.update(Crudable.IN, param);
+        if(param.get("id") == null){
+            return;
+        }
         Field field = FieldReflectUtil.findField(t.getClass(), "id");
         if (null != field) {
             FieldReflectUtil.setFieldValue(t, field, Long.valueOf(param.get("id").toString()));

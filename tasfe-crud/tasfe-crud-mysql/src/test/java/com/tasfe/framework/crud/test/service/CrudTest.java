@@ -124,7 +124,7 @@ public class CrudTest {
         member.setEmail("lait.zhang@gmail.com");
         member.setId(1L);
         member.setUserId(11L);
-        criteria = Criteria.from(Member.class).where().and("userId",Operator.EQ).endWhere();
+        criteria = Criteria.from(Member.class).where().and("userId",Operator.EQ,"1").endWhere();
         List<Member> userass = crudTemplate.find(member,criteria);
         System.out.println(userass);
 
