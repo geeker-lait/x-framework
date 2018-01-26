@@ -3,6 +3,7 @@ package com.tasfe.framework.uid.service.impls;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -17,6 +18,7 @@ import java.util.Date;
  * @tel 15801818092
  * @create 2018-01-26 13:57
  */
+@Service
 public class MemberIdGenerator {
     private Logger logger = LoggerFactory.getLogger(MemberIdGenerator.class);
 
