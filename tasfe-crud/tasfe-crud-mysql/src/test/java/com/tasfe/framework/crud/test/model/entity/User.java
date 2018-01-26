@@ -20,7 +20,7 @@ import java.util.Date;
  */
 @Alias("User")
 @Table(name = "t_user")
-@Storager(storage={StoragerType.MYSQL})
+@Storager(storage={StoragerType.ES,StoragerType.HIVE})
 @Sharding(key="id")
 @Data
 public class User{
@@ -30,7 +30,7 @@ public class User{
     @Transient
     public static final String USER_ID = "userId";*/
 
-
+    @ShardingKey(key="id")
     @Id
     private Long id;
 

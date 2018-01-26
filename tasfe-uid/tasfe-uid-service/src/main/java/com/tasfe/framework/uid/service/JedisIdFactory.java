@@ -2,6 +2,7 @@ package com.tasfe.framework.uid.service;
 
 import com.tasfe.framework.uid.service.algorithm.JedisIncr;
 import com.tasfe.framework.uid.service.impls.BillIdGenerator;
+import com.tasfe.framework.uid.service.impls.MemberIdGenerator;
 import com.tasfe.framework.uid.service.impls.OrderIdGenerator;
 import com.tasfe.framework.uid.service.impls.UserIdGenerator;
 import org.slf4j.Logger;
@@ -28,6 +29,9 @@ public class JedisIdFactory implements IdGenerator {
 
     @Autowired
     private BillIdGenerator billIdGenerator;
+
+    @Autowired
+    private MemberIdGenerator memberIdGenerator;
 
     /**
      * JedisClient对象
@@ -62,6 +66,9 @@ public class JedisIdFactory implements IdGenerator {
             // 借款单id
             case LOAN:
                 return null;
+            // 会员id
+            case MEMBER:
+                return memberIdGenerator.incrId();
             case ORDER_NYD:
                 return orderIdGenerator.incrId();
         }
