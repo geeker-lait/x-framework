@@ -59,18 +59,21 @@ public class JedisIdFactory implements IdGenerator {
         switch (biz) {
             // 用户id
             case USER:
-                return userIdGenerator.incrId();
+            case USER_YMT:
+                return userIdGenerator.incrId(biz);
             //账单id
             case BILL_NYD:
-                return billIdGenerator.incrId();
+                return billIdGenerator.incrId(biz);
             // 借款单id
             case LOAN:
                 return null;
             // 会员id
             case MEMBER:
-                return memberIdGenerator.incrId();
+                return memberIdGenerator.incrId(biz);
+
             case ORDER_NYD:
-                return orderIdGenerator.incrId();
+            case ORDER_YMT:
+                return orderIdGenerator.incrId(biz);
         }
         return null;
         // 转成数字类型，可排序

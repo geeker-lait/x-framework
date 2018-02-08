@@ -1,5 +1,6 @@
 package com.tasfe.framework.uid.service.impls;
 
+import com.tasfe.framework.uid.service.BizCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,26 +23,11 @@ public class BillIdGenerator {
 
     private Logger logger = LoggerFactory.getLogger(BillIdGenerator.class);
 
-   /* @Autowired
-    private RedisTemplate redisTemplate;
-
-    @Autowired
-    private JedisIncr jedisIncr;*/
     /**
      * 连接池对象
      */
     @Autowired
     private JedisPool jedisPool;
-
-    /**
-     * @param date
-     * @return
-     * @Description
-     */
-    private String getUserPrefix(Date date) {
-        long prefix = date.getTime();
-        return prefix + "";
-    }
 
 
     /**
@@ -50,24 +36,22 @@ public class BillIdGenerator {
      * @return
      * @Description 支持每秒999个订单号的生成
      */
-    public Long incrId() throws Exception {
+    public Long incrId(BizCode bizCode) throws Exception {
         String orderId = null;
         Jedis jedis = null;
-        // 00001String key = "nyd:user:id:".concat(prefix);
         // 13位
         Long time = new Date().getTime();
-        String key = "nyd:bill:id:".concat(time + "");
+        String key = bizCode.getKey().concat(time.toString());
         try {
-            //Long index = redisTemplate.boundValueOps(key).increment(1);
-            //Long index = jedisIncr.incr(key);
-
             jedis = jedisPool.getResource();
             Long index = jedis.incr(key);
             // 设置1099后超时key
             jedis.expire(key, 999 + 100);
-
             // 补位操作 保证满足3位
-            orderId = "10".concat(time.toString()).concat(String.format("%1$03d", index));
+            orderId = time.toString().concat(String.format("%1$03d", index));
+            if(bizCode.getPrefix() != null){
+                orderId = bizCode.getPrefix().toString().concat(orderId);
+            }
         } catch (Exception ex) {
             logger.error("分布式账单号生成失败异常: " + ex.getMessage());
             throw new Exception(ex);
