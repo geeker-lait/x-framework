@@ -1,6 +1,5 @@
 package com.tasfe.framework.uid.service;
 
-import com.tasfe.framework.uid.service.algorithm.JedisIncr;
 import com.tasfe.framework.uid.service.impls.BillIdGenerator;
 import com.tasfe.framework.uid.service.impls.MemberIdGenerator;
 import com.tasfe.framework.uid.service.impls.OrderIdGenerator;
@@ -33,25 +32,10 @@ public class JedisIdFactory implements IdGenerator {
     @Autowired
     private MemberIdGenerator memberIdGenerator;
 
-    /**
-     * JedisClient对象
-     */
-    @Autowired
-    private JedisIncr jedisIncr;
-
-
-
-
-
-
-
-
-
 
     /**
      * @return
      * @Description 生成分布式ID
-     * @author butterfly
      */
     @Override
     public Long generatorId(BizCode biz) throws Exception {
@@ -64,9 +48,6 @@ public class JedisIdFactory implements IdGenerator {
             //账单id
             case BILL_NYD:
                 return billIdGenerator.incrId(biz);
-            // 借款单id
-            case LOAN:
-                return null;
             // 会员id
             case MEMBER:
                 return memberIdGenerator.incrId(biz);
