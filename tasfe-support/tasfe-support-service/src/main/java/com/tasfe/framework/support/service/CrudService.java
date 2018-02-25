@@ -3,6 +3,7 @@ package com.tasfe.framework.support.service;
 
 import com.tasfe.framework.crud.api.criteria.Criteria;
 import com.tasfe.framework.crud.api.params.Page;
+import tk.mybatis.mapper.entity.Condition;
 
 import javax.management.Query;
 import java.io.Serializable;
@@ -114,6 +115,14 @@ public interface CrudService<M,E,PK extends Serializable> {
      * @return 查询结果
      */
     M findOne(M model,Criteria criteria);
+
+
+    /**
+     * 根据条件查找
+     * @param condition
+     * @return
+     */
+    List<M> findByCondition(Condition condition);
 
     /**
      * 分页查询

@@ -30,7 +30,7 @@ public class User{
     @Transient
     public static final String USER_ID = "userId";*/
 
-    @ShardingKey(key="id")
+    //@ShardingKey(key="id")
     @Id
     private Long id;
 

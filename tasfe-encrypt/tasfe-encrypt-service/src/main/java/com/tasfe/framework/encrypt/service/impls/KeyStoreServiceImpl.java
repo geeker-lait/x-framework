@@ -5,6 +5,9 @@ import com.tasfe.framework.encrypt.model.entity.KeyStore;
 import com.tasfe.framework.encrypt.service.KeyStoreService;
 import com.tasfe.framework.support.service.impls.CrudServiceImpl;
 import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Condition;
+
+import java.util.List;
 
 /**
  * 描述:
@@ -15,4 +18,8 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class KeyStoreServiceImpl extends CrudServiceImpl<KeyStoreInfos,KeyStore,Long> implements KeyStoreService {
+    @Override
+    public List<KeyStoreInfos> findByCondition(Condition condition) {
+        return null;
+    }
 }

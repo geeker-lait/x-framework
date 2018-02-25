@@ -50,6 +50,7 @@ public class JedisIdFactory implements IdGenerator {
                 return billIdGenerator.incrId(biz);
             // 会员id
             case MEMBER:
+            case RECOMMEND_YMT:
                 return memberIdGenerator.incrId(biz);
 
             case ORDER_NYD:

@@ -14,6 +14,10 @@
 
         <dependency>
             <groupId>com.tasfe.framework</groupId>
+            <artifactId>tasfe-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.tasfe.framework</groupId>
             <artifactId>tasfe-crud-api</artifactId>
         </dependency>
         <dependency>

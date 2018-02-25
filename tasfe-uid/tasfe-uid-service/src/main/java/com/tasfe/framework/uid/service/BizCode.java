@@ -7,7 +7,8 @@ public enum BizCode {
     MEMBER("nyd:member:id:",8),
 
     USER_YMT("ymt:user:id:",11),
-    ORDER_YMT("ymt:order:id:",11);
+    ORDER_YMT("ymt:order:id:",11),
+    RECOMMEND_YMT("ymt:recommend:id:",6);
 
     private String key;
     private Integer prefix;
